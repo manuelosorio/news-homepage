@@ -1,12 +1,145 @@
-/*----------------------  2 [Base]  ----------------------
+/*----------------------  2 [Base]  ----------------------*/
 /**
-  Base syntax should not contain any classes, id or use attribute selectors of any kind.
-  Resets or basic styles for elements belong here
+    Base syntax should not contain any classes, id or use attribute selectors of any
+    kind.
+    Resets or basic styles for elements belong here.
 
-  Example:
-    header { ... }
+    Example:
+      header { ... }
+@use "src/assets/css/variables"
+@use "src/assets/css/utils/breakpoint/breakpoint" as bp
+@use "src/assets/css/utils/fonts/fonts"
+
+//.debug *:not(hr)
+//  outline: 1px solid pink
+
+*
+  box-sizing: border-box
+  &:before, &:after
+    box-sizing: inherit
+
+html
+  font-size: 100%
+  -webkit-text-size-adjust: 100%
+  -ms-text-size-adjust: 100%
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0)
+a
+  text-decoration: none
+body
+  background: variables.$c-almostWhite
+  color: variables.$c-darkSpaceBlue
+  +fonts.textStyleBody()
+  max-width: 1200px
+  padding: 0 1.5rem
+  display: flex
+  flex-direction: column
+  margin: auto
+  &:before
+    transition: 0.2s ease-in-out
+  &:has(.is-open):before
+    content: ""
+    position: fixed
+    top: 0
+    left: 0
+    right: 0
+    bottom: 0
+    background-color: variables.$c-darkSpaceBlue
+    opacity: 0.5
+    z-index: 1
+    +bp.breakpoint("md")
+      display: none
+button
+  background: none
+  border: none
+  cursor: pointer
+  padding: 0
+  margin: 0
+img
+  width: 100%
+  height: auto
+nav
+  display: flex
+  flex-direction: row
+  justify-content: space-between
+  align-items: center
+  width: 100%
+  margin: 1.75rem 0 2rem
+  padding: 0
+  position: relative
+  +bp.breakpoint("md")
+    margin: 5.625rem 0 1.5rem
+  img
+    width: 45px
+    +bp.breakpoint("md")
+      width: 64px
+  ul
+    background: variables.$c-almostWhite
+    display: flex
+    flex-direction: column
+    align-items: flex-start
+    justify-content: flex-start
+    position: fixed
+    right: 0
+    top: 0
+    bottom: 0
+    margin: 0
+    width: 68%
+    transition: transform 0.2s ease-in-out
+    z-index: 2
+    +bp.breakpoint("md", "max")
+      transform: translateX(100%)
+    &.is-open
+      transform: translateX(0)
+    +bp.breakpoint("md")
+      width: initial
+      flex-direction: row
+      position: initial
+  li
+    list-style: none
+    margin-top: 10rem
+    + li
+      margin-top: 2.5rem
+    +bp.breakpoint("md")
+      margin-top: 0
+      + li
+        margin:
+          top: 0
+          left: 2.5rem
+a
+  color: variables.$c-gunmetal
+  +fonts.textStyleBody()
+  transition: color 0.2s ease-in-out
+  &:hover
+    color: variables.$c-lightVermilion
 
 
-
-
+h1
+  +fonts.textStyleHeadingL()
+  margin: 0
+  +bp.breakpoint("md")
+    +fonts.textStyleHeadingXl()
+h2
+  color: variables.$c-yellow
+  +fonts.textStyleHeadingL()
+  margin: 0 0 2.1875rem
+h3
+  +fonts.textStyleHeadingXs()
+aside
+  background-color: variables.$c-darkSpaceBlue
+  //height: 100%
+  padding: 1.25rem
+  h3
+    +fonts.textStyleHeadingS()
+    margin: 0 0 .5rem
+    a
+      color: variables.$c-almostWhite
+      &:hover
+        color: variables.$c-yellow
+  p
+    color: variables.$c-silver
+    margin: 0
+  hr
+    border: none
+    border-bottom: 1px solid variables.$c-silver
+    margin: 1.875rem 0
 /*----------------------  End Base  ----------------------*/

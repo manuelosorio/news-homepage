@@ -1,0 +1,76 @@
+@use "src/assets/css/utils/breakpoint/breakpoint" as bp;
+@use "src/assets/css/utils/fonts/fonts";
+@use "src/assets/css/variables";
+.l- {
+  &grid__header {
+    article {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+  }
+  &grid__articles {
+    padding-bottom: 2.875rem; // this is purposeful padding
+    article {
+      .right {
+        margin-left:  1.875rem;
+      }
+      //shame: should not add the styles for this section and children here...
+      strong {
+        color: variables.$c-silver;
+        @include fonts.textStyleHeadingM;
+      }
+      h3 {
+        margin: .75rem 0;
+        padding: 0;
+        a {
+          @extend a;
+          font: inherit;
+          color: variables.$c-darkSpaceBlue
+        }
+        p {
+          margin: 0;
+        }
+      }
+    }
+  }
+  @include bp.breakpoint('md', 'max') {
+    &grid__aside {
+      margin: 1.875rem 0;
+    }
+  }
+  @include bp.breakpoint('md') {
+    &grid__main {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      grid-gap: 1.875rem;
+      grid-template-areas:
+        "header aside"
+        "articles";
+    }
+    &grid__header {
+      grid-area: header;
+      grid-column: 1 / span 8;
+      grid-row: 1 / span 1;
+      div {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        gap: 1.875rem;
+      }
+    }
+    &grid__aside {
+      grid-area: aside;
+      grid-column: 9 / span 4;
+      grid-row: 1 / span 1;
+    }
+    &grid__articles {
+      grid-area: articles;
+      grid-column: 1 / span 12;
+      grid-row: 2 / span 1;
+      display: grid;
+      grid-template-columns: repeat(3, 4fr);
+      grid-gap: 1.875rem;
+    }
+  }
+}

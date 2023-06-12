@@ -1,0 +1,24 @@
+@use "src/assets/css/utils/breakpoint/breakpoint" as bp
+@use "src/assets/css/utils/fonts/fonts"
+@use "src/assets/css/variables"
+.button
+  width: fit-content
+  &__menu, &__menu-close
+    +bp.breakpoint("md")
+      display: none
+  &__menu
+    &-close
+      position: absolute
+      top: 1.6875rem
+      right: 1.25rem
+  &--cta
+    @extend .button
+    background-color: variables.$c-lightVermilion
+    color: variables.$c-almostWhite
+    padding: 0.75rem 1.5rem
+    font-size: 0.875rem
+    font-weight: 700
+    margin: 0
+    &:hover
+      background-color: variables.$c-darkSpaceBlue
+      color: variables.$c-almostWhite

@@ -122,6 +122,11 @@ function scripts() {
         extensions: ['.ts'],
       })
       .bundle()
+      .on('error', function (err) {
+        console.error(err);
+        this.emit('end');
+      })
+      .pipe(plumber())
       .pipe(source('main.js'))
       .pipe(gulp.dest(paths.scripts.dest))
   })
@@ -169,7 +174,7 @@ function ghPages() {
   return gulp.src("./_dist/**/*")
     .pipe(file('CNAME', config.cname))
     .pipe(deploy({
-      remoteUrl: "https://github.com/manuelosorio/starter-kit.git",
+      remoteUrl: "https://github.com/manuelosorio/cen-4025c-assignment-6.git",
       branch: "gh-pages"
     }))
 }

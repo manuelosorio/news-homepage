@@ -1,15 +1,64 @@
+@use "./variables"
+@use "./utils/breakpoint/breakpoint" as bp
 /*----------------------  3 [Layout]  ----------------------
 /**
-  Layout Syntax Example:
+    Layout Syntax Example:
 
-  .l-container { ... }
+    .l-container { ... }
 
-  Sass Syntax:
+    Sass Syntax:
 
-  .l-
-    &container
-      ...
-  html code:
-  <section class="l-container"> ... </section>
+    .l-
+      &container
+        ...
+    html code:
+      <section class="l-container"> ... </section>
+
+.l-
+  &container
+    &__1200
+      display: flex
+      flex-direction: column
+      margin: auto
+      max-width: 1200px
+      width: 90%
+  &row
+    display: flex
+    flex-direction: row
+
+$breakpoints: ("xs", "sm", "md", "lg")
+[class*="l-column"]
+  order: variables.$columns + 1
+  max-width: 98%
+  flex-basis: 98%
+  margin-bottom: 1rem
+  + [class*='l-column']
+    margin-left: unquote(variables.$gutter + "%")
+
+
+@for $i from 1 through variables.$columns
+  .l-column
+    &-#{$i}
+      max-width: unquote((variables.$grid-width * $i) - variables.$gutter + (variables.$gutter-space * $i) + '%')
+      flex-basis: unquote((variables.$grid-width * $i) - variables.$gutter + (variables.$gutter-space * $i) + '%')
+      margin: 0
+    &-order-#{$i}
+      order: $i
+[class*='l-column'] + [class*='l-column']
+  margin-left: unquote(variables.$gutter + "%")
+
+@each $size in $breakpoints
+  +bp.breakpoint($size)
+    @for $i from 1 through variables.$columns
+      .l-column-#{$size}
+        &-#{$i}
+          max-width: unquote((variables.$grid-width * $i) - variables.$gutter + (variables.$gutter-space * $i) + '%')
+          flex-basis: unquote((variables.$grid-width * $i) - variables.$gutter + (variables.$gutter-space * $i) + '%')
+          margin: 0
+        &-order-#{$i}
+          order: $i
+    //[class*='l-column-#{$size}'] + [class*='l-column-#{$size}']
+    //  margin-left: unquote(variables.$gutter + "%")
+
 
 /*----------------------  End Layout  ----------------------*/

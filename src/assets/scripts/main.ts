@@ -1,20 +1,31 @@
-import { Example } from "./modules/example";
-import { Person } from "./models/person";
+import { closeMenu, menuList, openMenu } from "./menu";
 
-const example = new Example();
-const exObject: Person = {
-  firstName: '',
-  lastName: '',
-  age: 0
-};
-example.helloWorld();
-exObject.firstName = "Manuel"
-exObject.lastName = "Osorio";
-exObject.age = 23;
-example.test('Hello', 1, exObject)
-example.test('bye', 2, {
-  firstName: 'John',
-  lastName: 'Doe',
-  age: 38,
-  favoriteFood: 'Pepperoni Pizza'
+document.addEventListener('DOMContentLoaded', () => {
+  const menuButton = document.getElementById('menu-button');
+  menuButton.addEventListener('click', (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    openMenu();
+  });
+  const closeButton = document.getElementById('close-button');
+  closeButton.addEventListener('click', (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    event.stopImmediatePropagation();
+    closeMenu();
+  });
+
+
+  const menuChildren = Array.from(menuList.children);
+  document.addEventListener('click', (event) => {
+    if (window.innerWidth < 768) {
+      const target = event.target as HTMLElement;
+      if (menuList.classList.contains('is-open')) {
+        if (!(target.classList.contains('nav__right') || menuChildren.includes(target.parentElement))) {
+          console.log('click outside');
+          closeMenu()
+        }
+      }
+    }
+  });
 });
